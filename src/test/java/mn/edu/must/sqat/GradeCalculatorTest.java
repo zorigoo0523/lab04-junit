@@ -110,4 +110,30 @@ class GradeCalculatorTest {
         assertThrows(IllegalArgumentException.class,
             () -> calc.totalScore(10, 41, 10, 10, 30));
     }
+
+    // ---------- Parameterized тестүүд ----------
+
+    @ParameterizedTest(name = "оноо={0} → дүн={1}")
+    @DisplayName("letterGrade: хязгаарын утгууд олон тохиолдолд")
+    @CsvSource({"95,A", "90,A", "89.99,B", "80,B", "79.99,C", "70,C",
+                "69.99,D", "60,D", "59.99,F", "0,F", "100,A"})
+    void letterGradeBoundaries(double score, String expected) {
+        assertEquals(expected, new GradeCalculator().letterGrade(score));
+    }
+
+    @ParameterizedTest(name = "letterGrade({0}) exception шиднэ")
+    @DisplayName("letterGrade: хүчингүй оноонууд exception шиднэ")
+    @ValueSource(doubles = {-1, -0.01, 100.01, 101, 1000})
+    void letterGradeRejectsInvalid(double score) {
+        assertThrows(IllegalArgumentException.class,
+            () -> new GradeCalculator().letterGrade(score));
+    }
+
+    @ParameterizedTest(name = "{0}+{1}+{2}+{3}+{4} = {5}")
+    @DisplayName("totalScore: нийлбэрийг олон тохиолдолд шалгана")
+    @CsvSource({"10,40,10,10,30,100", "0,0,0,0,0,0",
+                "5,20,5,5,15,50", "9,35,8,7,25,84"})
+    void totalScoreSums(double att, double lab, double q1, double q2, double exam, double expected) {
+        assertEquals(expected, new GradeCalculator().totalScore(att, lab, q1, q2, exam), 0.0001);
+    }
 }
