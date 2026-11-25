@@ -29,6 +29,8 @@
 - Үр дүн: Tests run: 31, Failures: 2, BUILD FAILURE
 - Унасан тестүүд:
 ```
+GradeCalculatorTest.letterGradeBoundaries:121 expected: <A> but was: <B>
+GradeCalculatorTest.ninetyIsExactlyA:20 expected: <A> but was: <B>
 ```
 - Дараа нь нөхцөлийг `>= 90` болгож буцааж засаад `mvn test`-ийг дахин ажиллуулахад бүх тест ногоон болсон (`results/mvn-test.txt`).
 
